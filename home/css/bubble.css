@@ -1,0 +1,55 @@
+
+.selectarea {
+    height:50px; width:100px;
+    border: none; border-radius: 15px;
+    background-color: var(--primary); color: var(--primary-font); 
+}
+
+.display-window {
+    display:flex; flex-direction:column; justify-content:space-between; align-items:center;
+    margin-top: 50px;
+}
+
+.container-bubble {
+    display:flex; flex-direction:column; justify-content:space-between; align-items:center;
+    margin:20px 0;
+    width:60%;
+} 
+.bubble {
+    background: linear-gradient(90deg, var(--bub-secondary) 0%, var(--bub-primary) 100%); color:var(--primary-font);
+    height:20vh; width:100%;
+    border: none; border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.bubble:hover, .bubble:focus {
+    transform: scale(1.10);
+    box-shadow: var(--bub-shadow);
+}
+.bubble:active {
+    transform: scale(1);
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.5);
+}
+
+.bubble-add {
+    background: linear-gradient(90deg, var(--primary-but-bg) 0%, var(--primary-but-bg) 100%); color:var(--highlight-font);
+}
+
+
+/*********************************************** manage-account.php ***********************************************/
+
+
+.container-account-bubble {
+    display:flex; flex-direction:column; justify-content:space-between; align-items:center;
+    margin:5px 0;
+    width:60%;
+}
+.account-bubble {
+    display:flex; flex-direction:row; align-items:center;
+    height: auto;
+}
+.account-bubble img {
+    height:150px; width:150px;
+    border-radius: 50%;
+}
