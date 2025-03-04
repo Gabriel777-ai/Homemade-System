@@ -1,6 +1,7 @@
 <?php
 
-function getParamTypes($params) {
+function getParamTypes($params)
+{
     $types = '';
     foreach ($params as $param) {
         if (is_int($param)) {
@@ -16,7 +17,8 @@ function getParamTypes($params) {
     return $types;
 }
 
-function executeQuery($query, $params = []) {
+function executeQuery($query, $params = [])
+{
     require 'connect.php';
 
     $stmt = $connections->prepare($query);
@@ -41,7 +43,8 @@ function executeQuery($query, $params = []) {
     return true;
 }
 
-function getEnumValues($tableName, $columnName) {
+function getEnumValues($tableName, $columnName)
+{
     require 'connect.php'; // Include your database connection file
 
     // Escape the table name and column name to prevent SQL injection
@@ -70,7 +73,8 @@ function getEnumValues($tableName, $columnName) {
 
 /**************************************************** REUSABLE CRUD ****************************************************/
 
-function create($tableName, $data) {
+function create($tableName, $data)
+{
     include 'connect.php'; // Include the database connection
 
     // Prepare column names and values
@@ -99,8 +103,14 @@ function create($tableName, $data) {
         ];
     }
 }
+// create('sampletable', [
+//     'column1' => 'sample_data',
+//     'column2' => 'sample_data',
+//     'column3' => 'sample_data',
+// ]);
 
-function read($tableName, $conditions = []) {
+function read($tableName, $conditions = [])
+{
     include 'connect.php';
 
     $query = "SELECT * FROM `$tableName`";
@@ -133,7 +143,8 @@ function read($tableName, $conditions = []) {
     }
 }
 
-function update($tableName, $data, $conditions) {
+function update($tableName, $data, $conditions)
+{
     include 'connect.php';
 
     // Prepare SET clause
@@ -171,7 +182,8 @@ function update($tableName, $data, $conditions) {
     }
 }
 
-function delete($tableName, $conditions) {
+function delete($tableName, $conditions)
+{
     include 'connect.php';
 
     // Prepare WHERE clause

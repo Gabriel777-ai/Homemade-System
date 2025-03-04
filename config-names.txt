@@ -1,5 +1,14 @@
 <?php
+    $root = '/Hospital System Section 3208/'; // Root File Location(inside htdocs)
+    $account_loc = 'home/users/manage-account.php'; // Account Managing File Location
+    $course_loc = 'home/courses/manage-course.php'; // Course Managing File Location EXPERIMENTAL
+    $sample_loc = 'home/sample/sampletemp.php'; // Sample File Location
     return [
+        // Routing
+        'route' => [
+            'root' => $root,
+            'account' => $account_loc,
+        ],
         // Database Configurations
         'database' => [
             'host' => 'localhost',
@@ -10,28 +19,24 @@
             'user_tbl' => 'user_tbl',
             'user_id' => 'user_id',
         ],
-        // Routing
-        'route' => [
-            'BASE_URL' => '/Hospital System Section 3208/',
-        ],
         // User Roles
         'role' => [
-            'admin' => [
-                'Dashboard' => 'file_location',
-                'Manage Users' => 'file_location',
+            'admin' => [ // Add Buttons to the Nav-bar
+                'Dashboard' => $root.$course_loc,
+                'Manage Users' => $root.$account_loc,
+                'Sample' => $root.$sample_loc,
             ],
             'patient' => [
-                'My Appointments' => 'file_location',
-                'My Fees' => 'file_location',
+                'My Appointments' => $root.$course_loc,
+                'Sample' => $root.$sample_loc,
             ],
             'employee' => [
-                'Tasks' => 'file_location',
-                'Schedule' => 'file_location',
+                'Tasks' => $root.$course_loc,
+                'Sample' => $root.$sample_loc,
             ],
             'doctor' => [
-                'Appointments' => 'file_location',
-                'Schedule' => 'file_location',
-                'Patients' => 'file_location',
+                'Appointments' => $root.$course_loc,
+                'Sample' => $root.$sample_loc,
             ],
         ]
         // '' => [
@@ -84,24 +89,4 @@
 	// $tbl[5][1] = 'id';   
 	// $tbl[5][2] = 'subject_id';    
 	// $tbl[5][3] = 'title';
-	// $tbl[5][4] = 'created_at';   
-
-    // $tbl[6][0] = 'questions';    // questions table
-    // $tbl[6][1] = 'id';   
-    // $tbl[6][2] = 'quiz_id';
-    // $tbl[6][3] = 'question_text';
-
-    // $tbl[7][0] = 'attempts';    // attempts table
-    // $tbl[7][1] = 'id'; 
-    // $tbl[7][2] = 'student_id';
-    // $tbl[7][3] = 'quiz_id';
-    // $tbl[7][4] = 'score';
-    // $tbl[7][5] = 'attempted_at';
-
-    // $tbl[8][0] = 'sections';    // sections table
-    // $tbl[8][1] = 'id'; 
-    // $tbl[8][2] = 'section_number';
-    // $tbl[8][3] = 'course_id';
-    // $tbl[8][4] = 'teacher_id';
-    // $tbl[8][5] = 'capacity';
-    // $tbl[8][6] = 'created_at';
+	// $tbl[5][4] = 'created_at';

@@ -1,7 +1,9 @@
 <?php
     require_once __DIR__ . '/../../database/connect.php';
+    require_once __DIR__ . '/../../config-names.php';
+    require_once __DIR__ . '/../../config-helper.php';
 
-    define('BASE_URL', '/Hospital System Section 3208/');
+    define('BASE_URL', config('route.root'));
 
     ini_set('session.cookie_lifetime', 86400);
     session_start();

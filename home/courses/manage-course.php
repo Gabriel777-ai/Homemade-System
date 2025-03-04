@@ -7,17 +7,9 @@
 <?php $pageTitle = "Manage Course"; require_once __DIR__ . '../../components/head.inc.php'; ?>
 <?php require_once __DIR__ . '../../components/nav-bar.inc.php'; ?>
 
-<div class='sort-bar'>
-    <!-- Sorting Algorithm -->
-    <form method="GET" action="">
-        <label for="sort"></label>
-        <select class='selectarea' name="sort" id="sort" onchange="this.form.submit()">
-            <option value="newest" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'newest') echo 'selected'; ?>>Newest</option>
-            <option value="oldest" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'oldest') echo 'selected'; ?>>Oldest</option>
-            <option value="name_asc" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'name_asc') echo 'selected'; ?>>Name (A-Z)</option>
-            <option value="name_desc" <?php if (isset($_GET['sort']) && $_GET['sort'] == 'name_desc') echo 'selected'; ?>>Name (Z-A)</option>
-        </select>
-    </form>
+<div>
+        <h1 style='color: red; text-align: center;'>EXPERIMENTAL ZONE</h1>
+        <sub style='color: red; text-align: center;'>This page is still in development</sub>
 </div>
     <?php
         require_once __DIR__ . '../../../database/connect.php';

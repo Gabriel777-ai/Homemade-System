@@ -174,7 +174,7 @@ error_reporting(E_ALL);
             require_once __DIR__ . '/../../config-helper.php';
             if (isset(config('role')[$role])) {
                 foreach (config('role')[$role] as $buttonLabel => $fileLocation) {
-                    echo "<li><button onclick=\"" . $fileLocation . "\">" . $buttonLabel . "</button></li>";
+                    echo "<li><button onclick=\"window.location.href='" . $fileLocation . "'\">" . $buttonLabel . "</button></li>";
                 }
             }
         ?>

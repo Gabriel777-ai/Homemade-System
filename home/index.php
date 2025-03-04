@@ -5,14 +5,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php $pageTitle = "Home"; require_once __DIR__ . '../components/head.inc.php'; ?>
-<style>
-    #logo {
-        height:500px; width:500px; 
-        margin:15%;
-        background-color:var(--lightgrey);
-        border-radius:50px;
-    }
-</style>
 <body>
 <?php require_once __DIR__ . '../components/nav-bar.inc.php'; ?>
 

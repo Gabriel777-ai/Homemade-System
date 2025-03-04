@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 27, 2025 at 03:57 PM
+-- Generation Time: Mar 04, 2025 at 05:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -276,19 +276,20 @@ CREATE TABLE `user_tbl` (
 --
 
 INSERT INTO `user_tbl` (`user_id`, `username`, `password`, `firstname`, `lastname`, `gender`, `address`, `dateofbirth`, `role`, `email`, `contact_no`, `notes`, `created_at`, `updated_at`) VALUES
-(2, 'atesh', '$2y$10$Ktybm3/J1UylY.bmz7FKPuB5zNNWPavHlPpHuTF2oDwmIOlis9QF.', 'Chester Barry', 'Dapatnapo', 'm', 'Holy Cross', '2003-07-21', 'admin', 'atesh', '912345678', 'di na natutulog aaaaaaah', '2024-11-23 05:57:38', '2024-11-25 14:59:33'),
-(3, 'keia', '$2y$10$vmYrVMdQOwXUtcO/imSTcO1rPaVg.zoLkxx1q4zwcGug92pZ3n.TO', 'Keith Anne', 'Delos Reyes', 'f', 'Antipolo', '2002-04-07', 'doctor', 'keia', '912345678', 'valorant valorant', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(4, 'shizue', '$2y$10$O7MJaYB20JPoGeYLMj7WMOWzmaMjqQ9ZYmfsIEWgKNolZTf7qGBoa', 'Mark Jade', 'Malisa', 'm', 'Nitang', '2000-01-01', 'employee', 'shizue', '912345678', 'heil hi-', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(5, 'bankai', '$2y$10$xePRe1aNp5bn2bTModgQ..SSjiBtOvFmSxkRzAh.QT3mlq8Iy3/SS', 'Ivan Christopher', 'Bullo', 'm', 'Brgy. Manotoc', '2004-02-07', 'doctor', 'bankai', '912345678', 'nang-f-flash ng kampi', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(9, 'kent', '$2y$10$U01ALvZ.8/31iz4AqMbuMecJn3dt46mDcZygAPlpKzSLng2q8oxHe', 'Kent Cedric', 'Ancheta', 'm', 'Sangandaan', '2004-08-02', 'patient', 'kent', '912345678', 'nagyayaya ng suntukan\r\n', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(13, 'areyousure', '$2y$10$1hnJKeEgO9e7uYn0lqg.D.yxehoxLiQh09NpG/Zt7LgpwuRLX4uzC', 'Rolando', 'Dela Pena', 'm', 'Talipapa', '2001-07-01', 'patient', 'rolando', '912345678', 'lagi maganda nasa isip, nabaliw', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(14, 'mark', '$2y$10$g0Lglo0hWn1c5kNA5l7OluBTL5OUk8TQAvOrNDI9WNAvOd1eUCUfC', 'Mark Angelo', 'Painagan', 'm', 'Talipapa', '2003-12-12', 'employee', 'mark', '912345678', 'clan war grinderist', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(24, 'balacy', '$2y$10$7SOwdt1Uvu5rLQ7yYnuGmu8Wl1FjH4IZkVYGUHlNJcQvHrku6axqK', 'John Mark', 'Balacy', 'm', 'Commonwealth Ave.', '2022-01-18', 'employee', 'balacy', '912345678', 'ryujin', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(30, 'ally', '$2y$10$q80Bo7m8oGpXGqKr3bKQqeqe7jHBSK65H/lotlHZ6.2tRvXvaXjZG', 'Allysa', 'Araneta', 'f', 'Quezon City', '2003-11-02', 'doctor', 'allysa@gmail.com', '946543362', 'sike', '2024-11-23 05:57:38', '2025-02-27 02:20:48'),
-(31, 'jorge', '$2y$10$uiP6WrIPDO9XckNNfZz/GOSZxDZGilEKmsIXif/VrHs97tgqYmLZW', 'Jorge', 'Lucero', 'm', 'Quezon City', '0000-00-00', 'admin', 'jorgelucero@gmail.com', '976433234', 'I am the Project Sponsor', '0000-00-00 00:00:00', '2025-02-27 02:16:33'),
-(32, 'andy', '$2y$10$I6xctDC6.dliMcXuDGFCjOrZS0wWCzDnxlSB2v9muu7vp.jc7droe', 'Andy', 'Adovas', 'm', 'Quezon City', '1999-02-12', 'admin', 'andy@gmail.com', '913423823', 'I teach programming', '2024-11-23 05:57:38', '2025-02-27 02:17:10'),
-(33, 'sid', '$2y$10$upI5dA06ihFw6E0c9NkxkuiG.KGRdTZa..xzD5BZwzunbX54afdF6', 'Joel', 'Almazan', 'o', 'Quezon City', '1999-06-16', 'admin', 'sid@gmail.com', '912345678', 'ahgaife', '2024-11-23 17:53:28', '2025-02-27 02:17:10'),
-(34, 'jessa', '$2y$10$fR7hT/OgCxNuXykhQZvVY.h5ircX3XYTo3vAY7LrfaLXo8eGQuBK2', 'Jessa', 'Brogada', 'f', 'Quezon CIty', '1999-07-15', 'admin', 'jessa@gmail.com', '924817549', 'agdfhjsy', '2024-11-24 07:02:37', '2025-02-27 02:17:10');
+(2, 'atesh', '$2y$10$yLpY74NKjHO/4iwi3FqdV.BbAPLY6IibrIw26Lk87A8rw9suAth0G', 'Chester Barry', 'Dapatnapo', 'm', 'Holy Cross', '2003-07-21', 'admin', 'atesh', '912345678', 'di na natutulog aaaaaaah', '2024-11-23 05:57:38', '2025-03-04 15:23:55'),
+(3, 'keia', '$2y$10$QdJQHizyzZ5i6FtpF/AK3OjF0Jzas/phY63HgnTwyYO3weQKrT9Fm', 'Keith Anne', 'Delos Reyes', 'f', 'Antipolo', '2002-04-07', 'doctor', 'keia', '912345678', 'valorant valorant', '2024-11-23 05:57:38', '2025-03-04 15:23:56'),
+(4, 'shizue', '$2y$10$reyp/8I1/U0vNXyOoFjouOLiXPshg6R8M08BKGstZ7TF6BToy/GD.', 'Mark Jade', 'Malisa', 'm', 'Nitang', '2000-01-01', 'employee', 'shizue', '912345678', 'heil hi-', '2024-11-23 05:57:38', '2025-03-04 15:23:56'),
+(5, 'bankai', '$2y$10$GBMvWcCZnSwLsCBfukviXuPpdb5cnm1kuxeSI.UDHcv0OWGijYrQ6', 'Ivan Christopher', 'Bullo', 'm', 'Brgy. Manotoc', '2004-02-07', 'doctor', 'bankai', '912345678', 'nang-f-flash ng kampi', '2024-11-23 05:57:38', '2025-03-04 15:23:56'),
+(9, 'kent', '$2y$10$6walkLV94HwxGYCXuNDgMuK7IZFz6GKCyKzesH0ZYSGQXFrKHlMgq', 'Kent Cedric', 'Ancheta', 'm', 'Sangandaan', '2004-08-02', 'patient', 'kent', '912345678', 'nagyayaya ng suntukan\r\n', '2024-11-23 05:57:38', '2025-03-04 15:23:56'),
+(13, 'areyousure', '$2y$10$pFw1.hj7DQW9NJMqOr80LOAbdltqZgqfsld.xH/lRfb/MRa1drvRy', 'Rolando', 'Dela Pena', 'm', 'Talipapa', '2001-07-01', 'patient', 'rolando', '912345678', 'lagi maganda nasa isip, nabaliw', '2024-11-23 05:57:38', '2025-03-04 15:23:56'),
+(14, 'mark', '$2y$10$fqRrIePey8vJ5F4.SnIA/O3QquDM2NUmsd/8S6xkHGg/oFTsr.xx2', 'Mark Angelo', 'Painagan', 'm', 'Talipapa', '2003-12-12', 'employee', 'mark', '912345678', 'clan war grinderist', '2024-11-23 05:57:38', '2025-03-04 15:23:57'),
+(24, 'balacy', '$2y$10$FYCo0SSavYXnW7Af3m03QezhmT63mpq46lN8VJDZEUkf4OS01yA22', 'John Mark', 'Balacy', 'm', 'Commonwealth Ave.', '2022-01-18', 'employee', 'balacy', '912345678', 'ryujin', '2024-11-23 05:57:38', '2025-03-04 15:23:57'),
+(30, 'ally', '$2y$10$n3tSmlabwtxdPArqdTjyxOd0.dVblv13pplUNWmGWk4n.rKEFBtRe', 'Allysa', 'Araneta', 'f', 'Quezon City', '2003-11-02', 'doctor', 'allysa@gmail.com', '946543362', 'sike', '2024-11-23 05:57:38', '2025-03-04 15:23:57'),
+(31, 'jorge', '$2y$10$/Un8j7G/ir0BHcIlGB8uM.lKqdsO2wo.dD5Wjxr6y/6WBju/wWL.i', 'Jorge', 'Lucero', 'm', 'Quezon City', '0000-00-00', 'admin', 'jorgelucero@gmail.com', '976433234', 'I am the Project Sponsor', '0000-00-00 00:00:00', '2025-03-04 15:23:57'),
+(32, 'andy', '$2y$10$PweXdulIwOSaX94FPC6W5exWHgWaIuVTdDv3mRb2lmPX1/Ay5g7Rm', 'Andy', 'Adovas', 'm', 'Quezon City', '1999-02-12', 'admin', 'andy@gmail.com', '913423823', 'I teach programming', '2024-11-23 05:57:38', '2025-03-04 15:23:57'),
+(33, 'sid', '$2y$10$N6D6GeJLF3IfCbz1wT4jMehRklGPwlqyjqFkCJAO1dc1tcbnjVTNC', 'Joel', 'Almazan', 'o', 'Quezon City', '1999-06-16', 'admin', 'sid@gmail.com', '912345678', 'ahgaife', '2024-11-23 17:53:28', '2025-03-04 15:23:57'),
+(34, 'jessa', '$2y$10$qU4JS7QgSJJZWXzsNaonT.GTf1x3dEiJXyZVM1gSJrZTi3wU2RnN.', 'Jessa', 'Brogada', 'f', 'Quezon CIty', '1999-07-15', 'admin', 'jessa@gmail.com', '924817549', 'agdfhjsy', '2024-11-24 07:02:37', '2025-03-04 15:23:57'),
+(35, 'doritos', '$2y$10$4knMQEAhG9LUV9ff3GowHOOJS98o.GXFWXjYYOu3r0KGinKexS7di', 'Rainbow', 'Summer', 'f', 'Quezon City', '2006-05-29', 'admin', 'doritos@gmail.com', '09205292005', 'i like drums', '2025-03-04 14:39:10', '2025-03-04 15:23:57');
 
 --
 -- Indexes for dumped tables
@@ -360,7 +361,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `user_tbl`
 --
 ALTER TABLE `user_tbl`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- Constraints for dumped tables
