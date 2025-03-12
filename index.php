@@ -140,11 +140,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <!-- Submit -->
         <button id='login' type="submit">Log In</button>
+        <button onclick="window.location.href='register-account.php'">Register</button>
         <!-- <button onclick="windows.location.href=''" type='button'>I forgot my Password</button> -->
     </form>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
     <script src="main.js"></script>
 </body>
-
 </html>

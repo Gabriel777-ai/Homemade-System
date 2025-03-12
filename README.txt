@@ -1,16 +1,17 @@
 
-HOW TO RUN THIS PROGRAM
-1. Put the project in the root htdocs folder in Xampp
+************************************** HOW TO RUN THIS PROGRAM *************************************************************
+
+1. Put the project in the root htdocs folder in Xampp, do not change the name folder, if you did, rename the $root in config-names.php to the same name
 2. Start Apache and MySQL in Xampp
 3. Export hospital_db.sql into Phpmyadmin
 4. Rename config-names.txt into config-names.php
-5. Change Configurations in config-names.php
+5. Change Configurations in config-names.php to run this system
+6. I always update config-names.txt, so update your config-names.php every new update
 
 
-<******************************************************************************************************>
 
+************************************** HOW TO DEVELOP THIS PROGRAM *************************************************************
 
-HOW TO DEVELOP THIS PROGRAM
 1. index.php in the root folder is the login page
 2. home/index.php folder is the home page
 3. home/components is where the reusable system components in pages are located and can be edited
@@ -22,10 +23,30 @@ HOW TO DEVELOP THIS PROGRAM
 
 
 
-<**********************************  Update Log  **********************************>
+************************************** UPDATE LOG *************************************************************
+
+4th Commit: 3/12/2025
+Fixed create-account.php, now usable
+Fixed Hashing Passwords algorithm
+Added more to create-account.php backend
+
+Added more details to sampletemp.php
+Fixed some line of codes
+Added comments in crud.php and sampletemp.php
+
+Cleaned code of manage-account.php
+
+Added register-account.php fully functional, will always be patient account
+Added Register Button in login page
+Added 2 new Accounts
+
+Added missing HTML tags: html, body
 
 
-Third Commit:  
+************************************** OLD LOG *************************************************************
+
+
+************************************** 3rd Commit: 3/5/2025 **************************************
 Root Location Added in config-names.php
 Fixed sidebar location Buttons
 
@@ -37,15 +58,11 @@ Added Sample Template for easy Development: home/sample/samplepage.php
 Added Routing variables for easy accessing of files in config-names.txt
 Added some helpful comments
 
-<**********************************  Old Log  **********************************>
-
-
-Built in flexible query functions for easy CRUD functions throughout the whole System
-
-First Commit: 2/27/2025
-Added Dynamic User Roles in Sidebar Buttons
-
-Second Commit: 2/27/2025
+************************************** 2nd Commit: 2/27/2025 **************************************
 Added Database(forgot)
 
+************************************** 1st Commit: 2/27/2025 **************************************
+Added Dynamic User Roles in Sidebar Buttons
+
+Built in flexible query functions for easy CRUD functions throughout the whole System
 

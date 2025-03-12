@@ -26,16 +26,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $pageTitle = $user ? htmlspecialchars($user['firstname']) . " " . htmlspecialchars($user['lastname']) : "User Not Found";
 require_once __DIR__ . '../../components/head.inc.php';
 ?>
+<body>
 <?php require_once __DIR__ . '../../components/nav-bar.inc.php'; ?>
 
 <?php
 if ($user) {
-    if ($user['gender'] === 'm') {
-        $pfp = BASE_URL . "/home/images/pfp-m.jpg";
-    } elseif ($user['gender'] === 'f') {
-        $pfp = BASE_URL . "/home/images/pfp-f.jpg";
-    } elseif ($user['gender'] === 'o') {
-        $pfp = BASE_URL . "/home/images/pfp-lgbtq.jpg";
+    switch($user['gender']){
+        case 'm': $pfp = BASE_URL . "/home/images/pfp-m.jpg"; break;
+        case 'f': $pfp = BASE_URL . "/home/images/pfp-f.jpg"; break;
+        case 'o': $pfp = BASE_URL . "/home/images/pfp-lgbtq.jpg"; break;
     }
 ?>
     <div style='display:flex; justify-content:center; align-items:center; margin:50px 0;'>
@@ -65,7 +64,7 @@ if ($user) {
         <div class='sort-bar'>
             <a class='delete cancel' href='<?= BASE_URL ?>/home/users/manage-account.php'>Cancel</a>
 
-            <?php if ($user_id == $user['user_id']): ?>
+            <?php if ($role === 'admin' || $user_id === $view_user_id): ?>
                 <a class='update' style='display:flex; justify-content:center; align-items:center;' href='edit-account.php'>Edit Profile</a>
 
             <?php elseif ($role === 'admin' && $user['role'] != 'admin'): ?>
@@ -76,53 +75,6 @@ if ($user) {
 
             <?php endif; ?>
         </div>
-
-        <?php if ($role != 'student' ||  $user_id == $user['user_id']): ?>
-            <h2><?php echo htmlspecialchars($user['firstname']); ?>'s Scores summary</h2>
-            <section class='scores'>
-                <?php
-                require_once __DIR__ . '/../../database/connect.php'; // Adjust path as necessary
-
-                // Fetch quizzes from the database
-                $query = "SELECT quizzes.title, subjects.course_code
-                            FROM quizzes
-                            JOIN subjects ON quizzes.subject_id = subjects.id
-                            ORDER BY course_code";
-
-                $result = $connections->query($query);
-
-                if ($result && $result->num_rows > 0): ?>
-                    <table class='scores'>
-                        <thead>
-                            <tr style='border:1px solid var(--darkgrey)'>
-                                <th><h2>Course</h2></th>
-                                <th><h2>Title</h2></th>
-                                <th><h2>Score</h2></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            <?php
-                            while ($quiz = $result->fetch_assoc()) {
-                                // Temporary placeholder for scores
-                                // $placeholderScore = rand(0, 100); // Random number between 0 and 100
-                                $placeholderScore = "--"; // Random number between 0 and 100
-
-                                echo "<tr>";
-                                echo "<td>{$quiz['course_code']}</td>";
-                                echo "<td>{$quiz['title']}</td>";
-                                echo "<td>{$placeholderScore}%</td>";
-                                echo "</tr>";
-                            }
-                            ?>
-
-                        </tbody>
-                    </table>
-                <?php else: ?>
-                    <p>No quizzes found in the database.</p>
-                <?php endif; ?>
-            </section>
-        <?php endif; ?>
     </div>
 <?php
 } else {
@@ -131,3 +83,5 @@ if ($user) {
 ?>
 
 <?php require_once __DIR__ . '../../components/footer.inc.php'; ?>
+</body>
+</html>

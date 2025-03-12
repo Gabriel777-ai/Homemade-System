@@ -1,4 +1,4 @@
-<?php
+<ht?php
 require_once __DIR__ . '../../../database/connect.php';
 require_once __DIR__ . '../../../database/crud.php';
 require_once __DIR__ . '../../components/session-start.inc.php';
@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <?php $pageTitle = "Edit Profile";
 require '../components/head.inc.php'; ?>
+<body>
 <?php require '../components/nav-bar.inc.php'; ?>
 
 <div class="container mt-4">
@@ -126,3 +127,5 @@ require '../components/head.inc.php'; ?>
 </div>
 
 <?php require_once __DIR__ . '../../components/footer.inc.php'; ?>
+</body>
+</html>

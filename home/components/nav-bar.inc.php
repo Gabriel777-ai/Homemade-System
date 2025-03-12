@@ -152,12 +152,10 @@ error_reporting(E_ALL);
 
 <aside id="dashboard">
     <?php
-    if ($gender === 'm') {
-        $pfp = BASE_URL . "/home/images/pfp-m.jpg";
-    } elseif ($gender === 'f') {
-        $pfp = BASE_URL . "/home/images/pfp-f.jpg";
-    } elseif ($gender === 'o') {
-        $pfp = BASE_URL . "/home/images/pfp-lgbtq.jpg";
+    switch($gender){
+        case 'm': $pfp = BASE_URL . "/home/images/pfp-m.jpg"; break;
+        case 'f': $pfp = BASE_URL . "/home/images/pfp-f.jpg"; break;
+        case 'o': $pfp = BASE_URL . "/home/images/pfp-lgbtq.jpg"; break;
     }
     ?>
     <img src="<?= $pfp ?>" alt="Profile Picture">

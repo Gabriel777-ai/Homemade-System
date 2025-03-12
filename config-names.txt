@@ -3,6 +3,7 @@
     $account_loc = 'home/users/manage-account.php'; // Account Managing File Location
     $course_loc = 'home/courses/manage-course.php'; // Course Managing File Location EXPERIMENTAL
     $sample_loc = 'home/sample/sampletemp.php'; // Sample File Location
+    
     return [
         // Routing
         'route' => [

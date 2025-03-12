@@ -1,10 +1,9 @@
 <?php
-    require_once __DIR__ . '../../../database/connect.php';
-    require_once __DIR__ . '../../components/session-start.inc.php';
+    require_once __DIR__ . '/database/connect.php';
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        require_once __DIR__ . '/../../database/connect.php';
-        require_once __DIR__ . '/../../database/crud.php';
+        require_once __DIR__ . '/database/connect.php';
+        require_once __DIR__ . '/database/crud.php';
         
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $password = $_POST['password']; // Passwords will not be filtered.
@@ -36,20 +35,28 @@
         ]);
         
         if ($result['success']) {
-            echo "<script>alert('" . $result['message'] . "');</script>"; // Record successfully inserted
-            echo "<script>alert('" . 'Insert ID: ' . $result['insert_id'] . "');</script>";
+            echo "<script>alert('" . "Account Successfully Created!" . "');</script>";
+            echo "<script>" . "window.location.href = 'index.php';" . "</script>";
         } else {
-            echo "<script>alert('" . $result['message'] . "');</script>"; // Error message
+            echo "<script>alert('" . $result['message'] . "');</script>";
         }
     }
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<?php $pageTitle = "Create New Account"; require '../components/head.inc.php'; ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Account</title>
+    <link rel="stylesheet" href="home/css/global.css">
+    <link rel="stylesheet" href="home/css/bubble.css">
+    <link rel="stylesheet" href="home/css/forms.css">
+    <link rel="stylesheet" href="home/css/questions.css">
+    <link rel="stylesheet" href="home/css/scores.css">
+    <link rel="icon" href="/home/images/logo2.png" type="image/png">
+</head>
 <body>
-<?php require '../components/nav-bar.inc.php'; ?>
-
-    <h1 class='title'>Create New Account</h1>
+    <h1 class='title'>Register Account</h1>
 
     <form class='mainform' action="" method='POST'>
         <sub>Username</sub>
@@ -78,27 +85,9 @@
         <sub>Date of Birth</sub>
         <input type='date' name='dateofbirth' require autocomplete='off'></input>
 
-        <sub>Role</sub>
         <div>
             <select name="role">
-                <option>none</option>
-                <?php
-                    require_once __DIR__ . '../../../database/connect.php';
-                    require_once __DIR__ . '../../../database/crud.php';
-                
-                    $roles = getEnumValues('user_tbl', 'role');
-                    if ($roles === false) {
-                        echo "<option value=''>Error fetching roles</option>";
-                    } elseif (!empty($roles)) {
-                        foreach ($roles as $role) {
-                            if ($role !== '') {
-                                echo "<option value='$role'>$role</option>";
-                            }
-                        }
-                    } else {
-                        echo "<option value=''>No roles found</option>";
-                    }
-                ?>
+                <option value='patient'>patient</option>
             </select>
         </div>
 
@@ -112,11 +101,10 @@
         <textarea name='notes' col='25' row='5' placeholder='Enter Notes..' require autocomplete='off'></textarea>
         
         <div class='sort-bar'>
-            <a class='delete cancel' href='<?= BASE_URL ?>/home/users/manage-account.php'>Cancel</a>
+            <a class='delete cancel' href='index.php'>Cancel</a>
             <button class='create' type='submit'>Create</button>
         </div>
     </form>
-
-<?php require_once __DIR__ . '../../components/footer.inc.php'; ?>
+    <script src='main.js'></script>
 </body>
 </html>

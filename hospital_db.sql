@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 04, 2025 at 05:21 PM
+-- Generation Time: Mar 12, 2025 at 04:27 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -289,7 +289,9 @@ INSERT INTO `user_tbl` (`user_id`, `username`, `password`, `firstname`, `lastnam
 (32, 'andy', '$2y$10$PweXdulIwOSaX94FPC6W5exWHgWaIuVTdDv3mRb2lmPX1/Ay5g7Rm', 'Andy', 'Adovas', 'm', 'Quezon City', '1999-02-12', 'admin', 'andy@gmail.com', '913423823', 'I teach programming', '2024-11-23 05:57:38', '2025-03-04 15:23:57'),
 (33, 'sid', '$2y$10$N6D6GeJLF3IfCbz1wT4jMehRklGPwlqyjqFkCJAO1dc1tcbnjVTNC', 'Joel', 'Almazan', 'o', 'Quezon City', '1999-06-16', 'admin', 'sid@gmail.com', '912345678', 'ahgaife', '2024-11-23 17:53:28', '2025-03-04 15:23:57'),
 (34, 'jessa', '$2y$10$qU4JS7QgSJJZWXzsNaonT.GTf1x3dEiJXyZVM1gSJrZTi3wU2RnN.', 'Jessa', 'Brogada', 'f', 'Quezon CIty', '1999-07-15', 'admin', 'jessa@gmail.com', '924817549', 'agdfhjsy', '2024-11-24 07:02:37', '2025-03-04 15:23:57'),
-(35, 'doritos', '$2y$10$4knMQEAhG9LUV9ff3GowHOOJS98o.GXFWXjYYOu3r0KGinKexS7di', 'Rainbow', 'Summer', 'f', 'Quezon City', '2006-05-29', 'admin', 'doritos@gmail.com', '09205292005', 'i like drums', '2025-03-04 14:39:10', '2025-03-04 15:23:57');
+(35, 'doritos', '$2y$10$4knMQEAhG9LUV9ff3GowHOOJS98o.GXFWXjYYOu3r0KGinKexS7di', 'Rainbow', 'Summer', 'f', 'Quezon City', '2006-05-29', 'admin', 'doritos@gmail.com', '09205292005', 'i like drums', '2025-03-04 14:39:10', '2025-03-04 15:23:57'),
+(36, 'red', '$2y$10$cpS8KAHWV6sAt74438BiyuWU..xu8sjmIplXTHBNnsuGL/mlxmvsG', 'North', 'Walker', 'o', 'Norway', '2007-04-21', 'admin', 'north@gmail.com', '09904212007', 'ktaaaaa', '2025-03-07 08:07:48', '2025-03-07 08:50:00'),
+(37, 'boy', '$2y$10$1X4.KLPpmH8Wx0ulsWiGHer7wmwgJOzvI9Gdtf1RvhcTe5sJLhv0m', 'One', 'Person', 'm', 'Quezon City', '2007-02-21', 'admin', 'boy@gmail.com', '09902212007', 'boi', '2025-03-07 08:55:01', NULL);
 
 --
 -- Indexes for dumped tables
@@ -361,7 +363,7 @@ ALTER TABLE `subjects`
 -- AUTO_INCREMENT for table `user_tbl`
 --
 ALTER TABLE `user_tbl`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- Constraints for dumped tables

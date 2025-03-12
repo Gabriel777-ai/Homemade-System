@@ -1,5 +1,6 @@
 <?php
 
+// Get parameter types for queries
 function getParamTypes($params)
 {
     $types = '';
@@ -17,6 +18,7 @@ function getParamTypes($params)
     return $types;
 }
 
+// Secure Query Execution
 function executeQuery($query, $params = [])
 {
     require 'connect.php';
@@ -43,9 +45,10 @@ function executeQuery($query, $params = [])
     return true;
 }
 
+// Fetches the roles in the Database like admin user employee
 function getEnumValues($tableName, $columnName)
 {
-    require 'connect.php'; // Include your database connection file
+    require 'connect.php';
 
     // Escape the table name and column name to prevent SQL injection
     $tableName = mysqli_real_escape_string($connections, $tableName);
@@ -62,20 +65,21 @@ function getEnumValues($tableName, $columnName)
         if (isset($row['Type']) && preg_match("/^enum\('(.*)'\)$/", $row['Type'], $matches)) {
             return explode("','", $matches[1]); // Split ENUM values into an array
         } else {
-            echo "Error: Column is not of ENUM type.";
+        echo "<script>alert('" . "Error: Column is not of ENUM type." . "');</script>";
         }
     } else {
-        echo "Error: Query failed or column not found. Debug info: " . mysqli_error($connections);
+        echo "<script>alert('" . "Error: Query failed or column not found. Debug info: " . mysqli_error($connections) . "');</script>";
     }
 
     return []; // Return empty array if no ENUM values found
 }
 
+
 /**************************************************** REUSABLE CRUD ****************************************************/
 
 function create($tableName, $data)
 {
-    include 'connect.php'; // Include the database connection
+    include 'connect.php';
 
     // Prepare column names and values
     $columns = implode(', ', array_keys($data));
@@ -103,7 +107,7 @@ function create($tableName, $data)
         ];
     }
 }
-// create('sampletable', [
+// $createSample = create('sampletable', [
 //     'column1' => 'sample_data',
 //     'column2' => 'sample_data',
 //     'column3' => 'sample_data',
@@ -142,6 +146,16 @@ function read($tableName, $conditions = [])
         ];
     }
 }
+// $readSample = "SELECT * FROM sample_tbl";
+// $result = executeQuery($readSample);
+//
+// if (!empty($result)) {   // Display All
+//     foreach ($result as $row) {
+//         echo "COlumn 1: " . $row['column1'] . " Column 2: " . $row['column2'] . "<br>";
+//     }
+// } else {
+//     echo "No records found.";
+// }
 
 function update($tableName, $data, $conditions)
 {
@@ -181,6 +195,13 @@ function update($tableName, $data, $conditions)
         ];
     }
 }
+// $updateSample = "
+//     UPDATE user_tbl 
+//     SET column1 = ?, column2 - ?
+//     WHERE sample_id = ?
+// ";
+// $params = [$column1, $column2, $sample_id];
+// executeQuery($updateQuery, $params);
 
 function delete($tableName, $conditions)
 {
@@ -213,3 +234,5 @@ function delete($tableName, $conditions)
         ];
     }
 }
+
+// $deleteSample = delete('sample_tbl', ['sample_id' => 5]);
