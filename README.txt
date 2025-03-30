@@ -25,7 +25,22 @@
 
 ************************************** UPDATE LOG *************************************************************
 
-4th Commit: 3/12/2025
+Trying to integrate Bootstrap, installed manually for Collaborators
+Added vendor/bootstrap folders for Bootstrap, so frontend is available offline
+Added link into /home/components/head.inc.php and nav-bar.inc.php to link Bootstrap
+Added a new Nav-bar, still in development but functional except for the search bar
+Added 5rem top margin on body (home/css/global.css) because the nav-bar is not taking space
+Added function: visible in main.js
+Cleaned code in main.js
+
+Thinking of removing unneeded files: home/components/nav-bar-old.inc.php, home/courses, home/css/bubble.css, home/css/forms.css
+
+
+
+************************************** OLD LOG *************************************************************
+
+
+************************************** 4th Commit: 3/12/2025 **************************************
 Fixed create-account.php, now usable
 Fixed Hashing Passwords algorithm
 Added more to create-account.php backend
@@ -43,12 +58,10 @@ Added 2 new Accounts
 Added missing HTML tags: html, body
 
 
-************************************** OLD LOG *************************************************************
-
-
 ************************************** 3rd Commit: 3/5/2025 **************************************
 Root Location Added in config-names.php
 Fixed sidebar location Buttons
+
 
 Added util/hasher.php for hashing passwords, use this only ONCE, ISSUE: This will also hash the other hashed passwords, leading to bugs
 Cleaned code of manage-account.php. ready for viewing
@@ -58,11 +71,12 @@ Added Sample Template for easy Development: home/sample/samplepage.php
 Added Routing variables for easy accessing of files in config-names.txt
 Added some helpful comments
 
+
 ************************************** 2nd Commit: 2/27/2025 **************************************
 Added Database(forgot)
+
 
 ************************************** 1st Commit: 2/27/2025 **************************************
 Added Dynamic User Roles in Sidebar Buttons
 
 Built in flexible query functions for easy CRUD functions throughout the whole System
-

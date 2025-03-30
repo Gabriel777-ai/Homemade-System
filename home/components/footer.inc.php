@@ -9,4 +9,3 @@
   <p>Privacy Policy</p>
   <p>Terms of Service</p>
 </footer>
-<script src="<?= BASE_URL ?>/main.js"></script>

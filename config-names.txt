@@ -24,7 +24,7 @@
         'role' => [
             'admin' => [ // Add Buttons to the Nav-bar
                 'Dashboard' => $root.$course_loc,
-                'Manage Users' => $root.$account_loc,
+                'Users' => $root.$account_loc,
                 'Sample' => $root.$sample_loc,
             ],
             'patient' => [

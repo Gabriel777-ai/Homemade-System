@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2025 at 04:27 PM
+-- Generation Time: Mar 30, 2025 at 12:12 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -203,7 +203,26 @@ INSERT INTO `quizzes` (`id`, `subject_id`, `title`, `created_at`) VALUES
 (791, 89, 'Quiz 15', '2024-11-25 06:38:13'),
 (792, 89, 'Quiz 16', '2024-11-25 06:38:13'),
 (793, 89, 'Quiz 17', '2024-11-25 06:38:13'),
-(794, 89, 'Quiz 18', '2024-11-25 06:38:13');
+(794, 89, 'Quiz 18', '2024-11-25 06:38:13'),
+(995, 101, 'Quiz 1', '2025-03-30 10:09:07'),
+(996, 101, 'Quiz 2', '2025-03-30 10:09:07'),
+(997, 101, 'Quiz 3', '2025-03-30 10:09:07'),
+(998, 101, 'Quiz 4', '2025-03-30 10:09:07'),
+(999, 101, 'Quiz 5', '2025-03-30 10:09:07'),
+(1000, 101, 'Quiz 6', '2025-03-30 10:09:07'),
+(1001, 101, 'Quiz 7', '2025-03-30 10:09:07'),
+(1002, 101, 'Quiz 8', '2025-03-30 10:09:07'),
+(1003, 101, 'Quiz 9', '2025-03-30 10:09:07'),
+(1004, 101, 'Quiz 10', '2025-03-30 10:09:07'),
+(1005, 101, 'Quiz 11', '2025-03-30 10:09:07'),
+(1006, 101, 'Quiz 12', '2025-03-30 10:09:07'),
+(1007, 101, 'Quiz 13', '2025-03-30 10:09:07'),
+(1008, 101, 'Quiz 14', '2025-03-30 10:09:07'),
+(1009, 101, 'Quiz 15', '2025-03-30 10:09:07'),
+(1010, 101, 'Quiz 16', '2025-03-30 10:09:07'),
+(1011, 101, 'Quiz 17', '2025-03-30 10:09:07'),
+(1012, 101, 'Quiz 18', '2025-03-30 10:09:07'),
+(1013, 101, 'Quiz 1', '2025-03-30 10:09:07');
 
 -- --------------------------------------------------------
 
@@ -230,7 +249,8 @@ INSERT INTO `subjects` (`id`, `course_code`, `name`, `description`, `created_at`
 (82, 'PM101', 'Project Management', 'Learn about managing projects professionally', '2024-11-24 17:02:31'),
 (85, 'OAD', 'Foundation of Shorthand', 'Learn about George Shorthand and how to write it', '2024-11-24 17:02:31'),
 (86, 'NE2', 'Natural Science (Zoology)', 'Learn about Animals in Zoology', '2024-11-24 17:02:31'),
-(89, 'PSY312', 'Group Dynamics', 'a psychology theory that studies how people interact and behave in groups, and the processes and actions that take place within and between groups', '2024-11-25 06:38:13');
+(89, 'PSY312', 'Group Dynamics', 'a psychology theory that studies how people interact and behave in groups, and the processes and actions that take place within and between groups', '2024-11-25 06:38:13'),
+(101, '', '', '', '2025-03-30 10:09:07');
 
 --
 -- Triggers `subjects`
@@ -351,13 +371,13 @@ ALTER TABLE `course_subjects`
 -- AUTO_INCREMENT for table `quizzes`
 --
 ALTER TABLE `quizzes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=995;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1014;
 
 --
 -- AUTO_INCREMENT for table `subjects`
 --
 ALTER TABLE `subjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT for table `user_tbl`

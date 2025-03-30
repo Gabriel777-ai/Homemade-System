@@ -71,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <style>
     body {
+        margin: 0;
         height: 100vh;
         width: 100vw;
     }
