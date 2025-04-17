@@ -4,5 +4,5 @@
     <title><?php echo htmlspecialchars($pageTitle); ?></title>
     <link rel="stylesheet" href="<?= BASE_URL ?>vendor/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="<?= BASE_URL ?>/home/css/global.css">
-    <link rel="icon" href="<?= BASE_URL ?>/home/images/logo2.png" type="image/png">
+    <link rel="icon" href="<?= BASE_URL ?>/home/images/bpm_logo_hospital.jpg" type="image/png">
 </head>

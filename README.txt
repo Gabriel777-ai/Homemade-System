@@ -9,7 +9,6 @@
 6. I always update config-names.txt, so update your config-names.php every new update
 
 
-
 ************************************** HOW TO DEVELOP THIS PROGRAM *************************************************************
 
 1. index.php in the root folder is the login page
@@ -25,6 +24,26 @@
 
 ************************************** UPDATE LOG *************************************************************
 
+Adding new Login Page, now functional(bugs might appear, pls report)
+Added Logo in Login Page and icon in every page(home/components/header.inc.php)
+
+Removed unneeded files: home/components/nav-bar-old.inc.php, home/courses, home/css/bubble.css, home/css/forms.css, indexy.php(old login)
+Removed unneeded images
+Also removed: package.json, package-lock.json
+Dropped all Tables in Database except for: user_tbl
+
+Added Styling to Registration Page, functionality still Experimental(pls report for bugs)
+Added function sanitizeInput() in database/crud.php, which is used in register-account.php
+Also when Registering an Account, it will automatically be a Patient
+If you want an Admin Account except for doritos 123, just create another using the page home/users/create-account.php
+
+BETA: Added home/dashboard/main-dashboard.php, soon this will be the main page for activity
+
+
+************************************** OLD LOG *************************************************************
+
+
+************************************** 5th Commit: 3/30/2025 **************************************
 Trying to integrate Bootstrap, installed manually for Collaborators
 Added vendor/bootstrap folders for Bootstrap, so frontend is available offline
 Added link into /home/components/head.inc.php and nav-bar.inc.php to link Bootstrap
@@ -34,10 +53,6 @@ Added function: visible in main.js
 Cleaned code in main.js
 
 Thinking of removing unneeded files: home/components/nav-bar-old.inc.php, home/courses, home/css/bubble.css, home/css/forms.css
-
-
-
-************************************** OLD LOG *************************************************************
 
 
 ************************************** 4th Commit: 3/12/2025 **************************************

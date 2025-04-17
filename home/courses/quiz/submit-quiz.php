@@ -1,1 +1,0 @@
-<h1>Submit Quiz</h1>

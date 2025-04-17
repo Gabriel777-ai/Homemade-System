@@ -62,90 +62,78 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Log In</title>
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
     <link href="home/css/global.css" rel="stylesheet">
+    <link href="home/images/bpm_logo_hospital.jpg" type="image/png" rel="icon">
 </head>
-<style>
-    body {
-        margin: 0;
-        height: 100vh;
-        width: 100vw;
-    }
+<body style='margin: 0;'>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<script src="main.js"></script>
 
-    form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+<section class="h-100 gradient-form">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-xl-10">
+        <div class="card rounded-3 text-black">
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="card-body p-md-5 mx-md-4">
 
-    h1 {
-        font-size: 4rem;
-        text-align: center;
-    }
+                <div class="text-center">
+                  <img src="home/images/bpm_logo_hospital.jpg"
+                    style="width: 185px; background-color: white;" alt="logo">
+                  <h4 class="mt-1 mb-5 pb-1">Bestlink General Hospital</h4>
+                </div>
 
-    input {
-        height: 30px;
-        width: 450px;
-        margin: 30px;
-        font-size: 1.5rem;
-    }
+                <form method="POST" action="">
+                  <p><?php if (!empty($loginError)){ echo htmlspecialchars($loginError); } ?></p>
 
-    #eye {
-        font-size: 2rem;
-    }
+                  <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="form2Example11">Email</label>
+                    <p><?= $emailErr ?></p>
+                    <input type="text" id="form2Example11" name="email" class="form-control" placeholder="Enter Username or Email Address"/>
+                  </div>
 
-    .btn,
-    #login {
-        height: 60px;
-        width: 600px;
-        margin: 20px;
-        background-color: var(--blue);
-        border-radius: 15px;
-    }
+                  <div data-mdb-input-init class="form-outline mb-4">
+                    <label class="form-label" for="form2Example22">Password</label>
+                    <button type="button" style="border:0;" onclick="seeCharacters('form2Example22')">👁</button>
+                    <p><?= $passwordErr ?></p>
+                    <input type="password" id="form2Example22" name="password" class="form-control" placeholder="Enter Password" />
+                  </div>
 
-    #login:hover {
-        background-color: var(--blue);
-    }
-</style>
+                  <div class="text-center pt-1 mb-5 pb-1">
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit">Log in</button>
+                  </div>
 
-<body>
+                  <div class="text-center pt-1 mb-5 pb-1">
+                    <a class="text-muted" href="#!">Forgot password?</a>
+                  </div>
 
-    <h1>Bestlink General Hospital</h1>
+                  <div class="d-flex align-items-center justify-content-center pb-4">
+                    <p class="mb-0 me-2">Don't have an account?</p>
+                    <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-success" onclick="window.location.href='register-account.php'">Create new</button>
+                  </div>
 
-    <form method="POST" action="">
-        <!-- General Error -->
-        <?php if (!empty($loginError)): ?>
-            <div class='error'><?php echo htmlspecialchars($loginError); ?></div>
-        <?php endif; ?>
-        <div>
-            <!-- Email -->
-            <label for="email">Email or Username</label>
-            <div>
-                <input type="text" id="email" name="email" placeholder="Enter email or username"
-                    value="<?php echo htmlspecialchars($email); ?>" required>
-                <small class='error'><?php echo htmlspecialchars($emailErr); ?></small>
+                </form>
+
+              </div>
             </div>
-            <!-- Password -->
-            <label for="password">Password</label>
-            <div>
-                <input type="password" id="password" name="password" placeholder="Enter Password">
-                <button id='eye' type="button" onclick="togglePassword()">👁</button>
+            <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
+              <div class="px-3 py-4 p-md-5 mx-md-4">
+                <h4 class="mb-4">Care through virtual devices.</h4>
+                <p class="small mb-0">2025 Bestlink General Hospital.</p>
+              </div>
             </div>
-            <small class='error'><?php echo htmlspecialchars($passwordErr); ?></small>
+          </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <!-- Submit -->
-        <button id='login' type="submit">Log In</button>
-        <button onclick="window.location.href='register-account.php'">Register</button>
-        <!-- <button onclick="windows.location.href=''" type='button'>I forgot my Password</button> -->
-    </form>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
-    <script src="main.js"></script>
 </body>
 </html>

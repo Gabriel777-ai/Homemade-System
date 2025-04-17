@@ -1,8 +1,8 @@
 console.log("Javascript connected");
 
 // v Show Password v
-function togglePassword() {
-    const passwordField = document.getElementById('password');
+function seeCharacters(field) {
+    const passwordField = document.getElementById(field);
     if (passwordField.type === 'password') {
         passwordField.type = 'text';
     } else {

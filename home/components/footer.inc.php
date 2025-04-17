@@ -5,7 +5,7 @@
   }
 </style>
 <footer>
-  <sub>&copy; 2024 Bestlink General Hospital. All rights reserved.</sub>
+  <sub>&copy; 2025 Bestlink General Hospital. All rights reserved.</sub>
   <p>Privacy Policy</p>
   <p>Terms of Service</p>
 </footer>

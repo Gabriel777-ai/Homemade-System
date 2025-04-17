@@ -74,6 +74,17 @@ function getEnumValues($tableName, $columnName)
     return []; // Return empty array if no ENUM values found
 }
 
+// Sanitizes User Input
+function sanitizeInput($field, $type = 'string') {
+    $filter = match ($type) {
+        'string' => FILTER_SANITIZE_STRING,
+        'email' => FILTER_SANITIZE_EMAIL,
+        'int' => FILTER_SANITIZE_NUMBER_INT,
+        default => FILTER_SANITIZE_STRING,
+    };
+    return filter_input(INPUT_POST, $field, $filter);
+}
+
 
 /**************************************************** REUSABLE CRUD ****************************************************/
 
