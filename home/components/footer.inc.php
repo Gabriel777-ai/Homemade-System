@@ -2,6 +2,7 @@
   footer {
     display:flex; flex-direction:column; justify-content:center; align-items:center;
     background-color:var(--primary);
+    margin-top: 10rem;
   }
 </style>
 <footer>

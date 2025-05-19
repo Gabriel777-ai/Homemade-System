@@ -1,7 +1,7 @@
 <?php
     $root = '/Hospital System Section 3208/'; // Root File Location(inside htdocs)
     $account_loc = 'home/users/manage-account.php'; // Account Managing File Location
-    $dashboard_loc = 'home/dashboard/main-dashboard.php'; // Non-existent Location
+    $dashboard_loc = 'home/public/main-dashboard.php'; // Non-existent Location
     $sample_loc = 'home/sample/sampletemp.php'; // Sample File Location
     
     return [
@@ -44,3 +44,4 @@
         //     '' => '',
         // ],
     ];
+    

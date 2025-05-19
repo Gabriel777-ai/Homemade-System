@@ -31,11 +31,8 @@ require_once __DIR__ . '../../components/head.inc.php';
 
 <?php
 if ($user) {
-    switch($user['gender']){
-        case 'm': $pfp = BASE_URL . "/home/images/pfp-m.jpg"; break;
-        case 'f': $pfp = BASE_URL . "/home/images/pfp-f.jpg"; break;
-        case 'o': $pfp = BASE_URL . "/home/images/pfp-lgbtq.jpg"; break;
-    }
+    $pfp = BASE_URL . "/home/images/pfp-m.jpg"; 
+    
 ?>
     <div style='display:flex; justify-content:center; align-items:center; margin:50px 0;'>
         <img src="<?= $pfp ?>" alt="Profile Picture" style='height:30% width:30%; border-radius:50%;'>

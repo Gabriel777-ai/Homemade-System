@@ -10,11 +10,32 @@
 
     if(!ISSET($_SESSION['username'])){
         ?>
+            <head>
+                <link rel="stylesheet" href="<?= BASE_URL ?>vendor/bootstrap/bootstrap.min.css">
+                <style>
+                    form {
+                    background-color: #f8f9fa;
+                    height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    }
+                    .card {
+                    padding: 2rem;
+                    text-align: center;
+                    max-width: 400px;
+                    }
+                </style>
+            </head>
             <form method='POST' onsubmit="return logout('../')" action='<?= BASE_URL ?>/home/process_logout.php'>
-                <button type='submit'>Back to Log in Page</button>
+                <div class='card shadow'>
+                    <img src="<?= BASE_URL ?>home/images/omg-meme.gif" alt="">
+                    <h1 class='text-danger'>Session expired! Please Log in again!</h1>
+                    <button type='submit' class="btn btn-danger">Back to Log in Page</button>
+                </div>
             </form>
         <?php
-        die("<h1 style='position: relative; top: 40vh; left: 38vw;'>Session expired!</h1>");
+        die();
     }
 
     $usertbl = config('database.user_tbl');

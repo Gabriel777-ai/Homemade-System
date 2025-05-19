@@ -13,10 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Validate inputs
     if (empty($email)) {
-        $emailErr = 'Email is required.';
+        $emailErr = "<p class='text-danger'>Email is required.</p>";
     }
     if (empty($password)) {
-        $passwordErr = 'Password is required.';
+        $passwordErr = "<p class='text-danger'>Password is required.</p>";
     }
 
     if (empty($emailErr) && empty($passwordErr)) {

@@ -1,6 +1,6 @@
+Made by Dapatnapo, Chester Barry A.
 
 ************************************** HOW TO RUN THIS PROGRAM *************************************************************
-
 1. Put the project in the root htdocs folder in Xampp, do not change the name folder, if you did, rename the $root in config-names.php to the same name
 2. Start Apache and MySQL in Xampp
 3. Export hospital_db.sql into Phpmyadmin
@@ -10,7 +10,6 @@
 
 
 ************************************** HOW TO DEVELOP THIS PROGRAM *************************************************************
-
 1. index.php in the root folder is the login page
 2. home/index.php folder is the home page
 3. home/components is where the reusable system components in pages are located and can be edited
@@ -21,9 +20,21 @@
 8. Start Developing at home/sample/sampletemp.php, read the tutorials there
 
 
-
 ************************************** UPDATE LOG *************************************************************
 
+Added temporary dashboard with modules of our Hospital with modals
+New User Management UI, now listed in Tables, fully functional
+Replaced all user Profile Pictures into single one
+Session expired page now looks better
+
+Next Commit: Ready to begin modules simple backend code
+
+************************************** OLD LOG *************************************************************
+
+************************************** 7th Commit: 4/16/2025 **************************************
+forgot to update config-names lmao
+
+************************************** 6th Commit: 4/16/2025 **************************************
 Adding new Login Page, now functional(bugs might appear, pls report)
 Added Logo in Login Page and icon in every page(home/components/header.inc.php)
 
@@ -38,9 +49,6 @@ Also when Registering an Account, it will automatically be a Patient
 If you want an Admin Account except for doritos 123, just create another using the page home/users/create-account.php
 
 BETA: Added home/dashboard/main-dashboard.php, soon this will be the main page for activity
-
-
-************************************** OLD LOG *************************************************************
 
 
 ************************************** 5th Commit: 3/30/2025 **************************************

@@ -1,4 +1,4 @@
-console.log("Javascript connected");
+console.log("Made by Dapatnapo, Chester from BSIT - 3208");
 
 // v Show Password v
 function seeCharacters(field) {
@@ -42,3 +42,9 @@ function pages(linkhtml){
 //     let fog = document.getElementById(fogId);
 //     fog.style.display = 'none';
 // }
+
+// v Submit User ID to PHP v
+function submitUserForm(id) {
+    document.getElementById('user_id' + id).value = id;
+    document.getElementById('userForm' + id).submit();
+}

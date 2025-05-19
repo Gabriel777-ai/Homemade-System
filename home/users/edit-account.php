@@ -1,4 +1,4 @@
-<ht?php
+<?php
 require_once __DIR__ . '../../../database/connect.php';
 require_once __DIR__ . '../../../database/crud.php';
 require_once __DIR__ . '../../components/session-start.inc.php';
@@ -120,7 +120,7 @@ require '../components/head.inc.php'; ?>
         <h3><?= $created_at ?></h3>
 
         <div class="sort-bar">
-            <a class='delete cancel' href="<?= BASE_URL ?>/home/">Cancel</a>
+            <a class='delete cancel' href="<?= BASE_URL ?>/home/users/manage-account.php">Cancel</a>
             <button type="submit" class="update">Save Changes</button>
         </div>
     </form>
