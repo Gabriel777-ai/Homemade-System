@@ -187,3 +187,129 @@ class AssetManager {
     }
 }
 ?>
+-- Create the database if it doesn't exist
+-- CREATE DATABASE IF NOT EXISTS company_management;
+-- USE company_management;
+
+-- Departments table
+CREATE TABLE IF NOT EXISTS departments (
+    department_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_name VARCHAR(100) NOT NULL UNIQUE,
+    department_code VARCHAR(20),
+    manager_name VARCHAR(100),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Findings categories table
+CREATE TABLE IF NOT EXISTS findings_categories (
+    category_id INT AUTO_INCREMENT PRIMARY KEY,
+    category_name VARCHAR(100) NOT NULL,
+    severity_level ENUM('Low', 'Medium', 'High', 'Critical') NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Audits table
+CREATE TABLE IF NOT EXISTS audits (
+    audit_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_id INT NOT NULL,
+    audit_date DATE NOT NULL,
+    audit_title VARCHAR(255) NOT NULL,
+    findings TEXT,
+    status ENUM('Pending', 'In Progress', 'Completed', 'Closed') NOT NULL DEFAULT 'Pending',
+    severity ENUM('None', 'Low', 'Medium', 'High', 'Critical') NOT NULL DEFAULT 'None',
+    auditor_name VARCHAR(100),
+    resolution_date DATE,
+    resolution_notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (department_id) REFERENCES departments(department_id) ON DELETE RESTRICT
+);
+
+-- Audit findings table (for more detailed findings)
+CREATE TABLE IF NOT EXISTS audit_findings (
+    finding_id INT AUTO_INCREMENT PRIMARY KEY,
+    audit_id INT NOT NULL,
+    category_id INT NOT NULL,
+    finding_description TEXT NOT NULL,
+    recommendation TEXT,
+    status ENUM('Open', 'In Progress', 'Resolved', 'Closed') NOT NULL DEFAULT 'Open',
+    assigned_to VARCHAR(100),
+    due_date DATE,
+    resolution_date DATE,
+    resolution_notes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (audit_id) REFERENCES audits(audit_id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES findings_categories(category_id) ON DELETE RESTRICT
+);
+
+-- Audit documents table (for attachments)
+CREATE TABLE IF NOT EXISTS audit_documents (
+    document_id INT AUTO_INCREMENT PRIMARY KEY,
+    audit_id INT NOT NULL,
+    document_name VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL,
+    file_type VARCHAR(50),
+    file_size INT,
+    uploaded_by VARCHAR(100),
+    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (audit_id) REFERENCES audits(audit_id) ON DELETE CASCADE
+);
+
+-- Insert sample departments
+INSERT INTO departments (department_name, department_code, manager_name) VALUES
+('Logistics', 'LOG', 'John Smith'),
+('Procurement', 'PROC', 'Jane Doe'),
+('Finance', 'FIN', 'Robert Johnson'),
+('Human Resources', 'HR', 'Emily Williams'),
+('Information Technology', 'IT', 'Michael Brown');
+
+-- Insert sample findings categories
+INSERT INTO findings_categories (category_name, severity_level, description) VALUES
+('Inventory Discrepancy', 'High', 'Differences between physical inventory and system records'),
+('Documentation Issue', 'Medium', 'Missing or incomplete documentation'),
+('Process Non-compliance', 'High', 'Failure to follow established processes'),
+('Security Vulnerability', 'Critical', 'Identified security risks or breaches'),
+('Operational Inefficiency', 'Low', 'Processes that could be optimized for better efficiency');
+
+-- Insert sample audits matching your example data
+INSERT INTO audits (department_id, audit_date, audit_title, findings, status, severity, auditor_name) VALUES
+((SELECT department_id FROM departments WHERE department_name = 'Logistics'), 
+ '2025-04-01', 
+ 'Quarterly Logistics Audit', 
+ 'Inventory mismatch detected', 
+ 'Completed', 
+ 'High', 
+ 'David Anderson'),
+ 
+((SELECT department_id FROM departments WHERE department_name = 'Procurement'), 
+ '2025-03-15', 
+ 'Procurement Process Audit', 
+ 'No issues found', 
+ 'Closed', 
+ 'None', 
+ 'Sarah Miller');
+
+-- Insert sample detailed findings
+INSERT INTO audit_findings (audit_id, category_id, finding_description, recommendation, status) VALUES
+(1, 
+ (SELECT category_id FROM findings_categories WHERE category_name = 'Inventory Discrepancy'),
+ 'Physical count showed 15 fewer items than system inventory for SKU-12345',
+ 'Conduct full inventory reconciliation and implement cycle counting',
+ 'Open'),
+ 
+(1,
+ (SELECT category_id FROM findings_categories WHERE category_name = 'Process Non-compliance'),
+ 'Receiving process not following documented procedures for high-value items',
+ 'Retrain warehouse staff on proper receiving procedures',
+ 'In Progress');
+
+-- Create indexes for better performance
+CREATE INDEX idx_audits_department ON audits(department_id);
+CREATE INDEX idx_audits_date ON audits(audit_date);
+CREATE INDEX idx_findings_audit ON audit_findings(audit_id);
+CREATE INDEX idx_findings_category ON audit_findings(category_id);
+
