@@ -1,14 +1,13 @@
 <?php
-require_once __DIR__ . '../../../database/connect.php';
-require_once __DIR__ . '../../components/session-start.inc.php';
-require_once __DIR__ . '/../../config-helper.php';
-require_once __DIR__ . '../../../database/crud.php';
+    require_once __DIR__ . '../../../database/connect.php';
+    require_once __DIR__ . '../../components/session-start.inc.php';
+    require_once __DIR__ . '/../../config-helper.php';
+    require_once __DIR__ . '../../../database/crud.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <?php $pageTitle = "Dashboard";
 require_once __DIR__ . '../../components/head.inc.php'; ?>
-
 <head>
     <style>
         .custom-modal {
@@ -64,7 +63,6 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
         }
     </style>
 </head>
-
 <body>
     <?php require_once __DIR__ . '../../components/nav-bar.inc.php'; ?>
 
@@ -74,28 +72,28 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
         <div class="row justify-content-center g-4">
 
             <div class="col-md-3">
-                <div class="dept-tile bg-success text-white" onclick="visible('hrModal')">
+                <div class="dept-tile text-dark" style='background-color: rgb(0, 174, 153);' onclick="visible('hrModal')">
                     <i class="bi bi-people-fill fs-1 mb-2"></i>
                     <h5>Human Resources</h5>
                 </div>
             </div>
 
             <div class="col-md-3">
-                <div class="dept-tile bg-warning text-dark" onclick="visible('logModal')">
+                <div class="dept-tile text-white" style='background-color: rgb(68, 0, 153);' onclick="visible('logModal')">
                     <i class="bi bi-truck fs-1 mb-2"></i>
                     <h5>Logistics</h5>
                 </div>
             </div>
 
             <div class="col-md-3">
-                <div class="dept-tile bg-primary text-white" onclick="visible('coreModal')">
+                <div class="dept-tile text-dark" style='background-color: yellow;' onclick="visible('coreModal')">
                     <i class="bi bi-clipboard-data-fill fs-1 mb-2"></i>
                     <h5>Core Transaction</h5>
                 </div>
             </div>
 
             <div class="col-md-3">
-                <div class="dept-tile bg-danger text-white" onclick="visible('financialModal')">
+                <div class="dept-tile text-white" style='background-color: red;' onclick="visible('financialModal')">
                     <i class="bi bi-currency-dollar fs-1 mb-2"></i>
                     <h5>Financials</h5>
                 </div>
@@ -103,7 +101,6 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
 
         </div>
     </div>
-
 
     <!-- HR Modal -->
     <div id="hrModal" class="custom-modal">
@@ -114,21 +111,28 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
             </div>
             <div class="list-group">
                 <h4>HR Part 1-2</h4>
-                <a href="" class="list-group-item list-group-item-action">Performance Management</a>
-                <a href="" class="list-group-item list-group-item-action">Recruitment and Applicant Management</a>
-                <a href="" class="list-group-item list-group-item-action">Learning Management and Training Management</a>
-                <a href="" class="list-group-item list-group-item-action">New Hire on Board and Employee Self Service</a>
-                <a href="" class="list-group-item list-group-item-action">Succession Planning</a>
-                <a href="" class="list-group-item list-group-item-action">Social Recognition</a>
-                <a href="" class="list-group-item list-group-item-action">Competency Management</a>
+                <?php
+                    require_once __DIR__ . '/../../config-helper.php';
+
+                    $routes = config('route');
+                    if (isset($routes['hr12'])) {
+                        foreach ($routes['hr12'] as $buttonLabel => $fileLocation) {
+                        ?>
+                            <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
                 <h4>HR Part 3-4</h4>
-                <a href="" class="list-group-item list-group-item-action">Core Human Capital Management</a>
-                <a href="" class="list-group-item list-group-item-action">Time and Attendance(Timesheet Management, Shift and Scheduling)</a>
-                <a href="" class="list-group-item list-group-item-action">Claims and Reimbursement</a>
-                <a href="" class="list-group-item list-group-item-action">Compensation Planning and Administration</a>
-                <a href="" class="list-group-item list-group-item-action">HR Analytics</a>
-                <a href="" class="list-group-item list-group-item-action">Leave Management</a>
-                <a href="" class="list-group-item list-group-item-action">Payroll</a>
+                <?php
+                    if (isset($routes['hr34'])) {
+                        foreach ($routes['hr34'] as $buttonLabel => $fileLocation) {
+                        ?>
+                          <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
             </div>
         </div>
     </div>
@@ -142,16 +146,25 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
             </div>
             <div class="list-group">
                 <h4>Logistic 1</h4>
-                <a href="" class="list-group-item list-group-item-action">Project Management</a>
-                <a href="" class="list-group-item list-group-item-action">Warehousing</a>
-                <a href="" class="list-group-item list-group-item-action">Procurement</a>
-                <a href="" class="list-group-item list-group-item-action">Asset Management</a>
+                <?php
+                    if (isset($routes['log1'])) {
+                        foreach ($routes['log1'] as $buttonLabel => $fileLocation) {
+                        ?>
+                            <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
                 <h4>Logistics 2</h4>
-                <a href="" class="list-group-item list-group-item-action">Vendor Portal</a>
-                <a href="" class="list-group-item list-group-item-action">Document Tracking System(Approval)</a>
-                <a href="" class="list-group-item list-group-item-action">Vehicle Reservation System</a>
-                <a href="" class="list-group-item list-group-item-action">Fleet Management</a>
-                <a href="" class="list-group-item list-group-item-action">Audit Management</a>
+                <?php
+                    if (isset($routes['log2'])) {
+                        foreach ($routes['log2'] as $buttonLabel => $fileLocation) {
+                        ?>
+                            <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
             </div>
         </div>
     </div>
@@ -165,22 +178,35 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
             </div>
             <div class="list-group">
                 <h4>Core Transaction 1</h4>
-                <a href="" class="list-group-item list-group-item-action">Patient Registration</a>
-                <a href="" class="list-group-item list-group-item-action">Doctor Appointment</a>
-                <a href="" class="list-group-item list-group-item-action">In Patient Management/Out Patient Management</a>
-                <a href="" class="list-group-item list-group-item-action">Medical Record and Data Management</a>
-                <a href="" class="list-group-item list-group-item-action">Billing & Discharge Management</a>
+                <?php
+                    if (isset($routes['core1'])) {
+                        foreach ($routes['core1'] as $buttonLabel => $fileLocation) {
+                        ?>
+                            <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
                 <h4>Core Transaction 2</h4>
-                <a href="" class="list-group-item list-group-item-action">Out Patient Treatment</a>
-                <a href="" class="list-group-item list-group-item-action">HMO and Insurance Management</a>
-                <a href="" class="list-group-item list-group-item-action">Surgery Scheduler</a>
-                <a href="" class="list-group-item list-group-item-action">Diet Management</a>
-                <a href="" class="list-group-item list-group-item-action">Laboratory Management</a>
+                <?php
+                    if (isset($routes['core2'])) {
+                        foreach ($routes['core2'] as $buttonLabel => $fileLocation) {
+                        ?>
+                            <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
                 <h4>Core Transaction 3</h4>
-                <a href="" class="list-group-item list-group-item-action">Bed and Linen Management</a>
-                <a href="" class="list-group-item list-group-item-action">HOMIS Analytics</a>
-                <a href="" class="list-group-item list-group-item-action">Pharmacy</a>
-                <a href="" class="list-group-item list-group-item-action">Medical Package Management</a>
+                <?php
+                    if (isset($routes['core3'])) {
+                        foreach ($routes['core3'] as $buttonLabel => $fileLocation) {
+                        ?>
+                            <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
             </div>
         </div>
     </div>
@@ -194,20 +220,21 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
             </div>
             <div class="list-group">
                 <h4>Financials</h4>
-                <a href="" class="list-group-item list-group-item-action">Disbursement</a>
-                <a href="" class="list-group-item list-group-item-action">Budget Management</a>
-                <a href="" class="list-group-item list-group-item-action">Collection</a>
-                <a href="" class="list-group-item list-group-item-action">General Ledger</a>
-                <a href="" class="list-group-item list-group-item-action">Accounts Payable/Accounts Receivables</a>
+                <?php
+                    if (isset($routes['fin'])) {
+                        foreach ($routes['fin'] as $buttonLabel => $fileLocation) {
+                        ?>
+                            <a href="<?= $fileLocation ?>" class="list-group-item list-group-item-action"><?= $buttonLabel ?></a>
+                        <?php
+                        }
+                    }
+                ?>
             </div>
         </div>
     </div>
 
 
-
-
     <?php require_once __DIR__ . '../../components/footer.inc.php'; ?>
-
     <script>
         function showModal(id) {
             const el = document.getElementById(id);
@@ -219,5 +246,4 @@ require_once __DIR__ . '../../components/head.inc.php'; ?>
         }
     </script>
 </body>
-
 </html>

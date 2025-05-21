@@ -22,6 +22,15 @@ Made by Dapatnapo, Chester Barry A.
 
 ************************************** UPDATE LOG *************************************************************
 
+Now Added All Modules with some Basic Frontend for each, separated views by respective roles
+Added bootstrap icons link into home/components/head.inc.php, which made things prettier
+Added RBAC(Role-Based Access Control) where users with certain roles cannot access a page
+Added home/components/restricted.inc.php restricted users see this page when restricted
+
+
+************************************** OLD LOG *************************************************************
+
+************************************** 8th Commit: 5/19/2025 **************************************
 Added temporary dashboard with modules of our Hospital with modals
 New User Management UI, now listed in Tables, fully functional
 Replaced all user Profile Pictures into single one
@@ -29,7 +38,6 @@ Session expired page now looks better
 
 Next Commit: Ready to begin modules simple backend code
 
-************************************** OLD LOG *************************************************************
 
 ************************************** 7th Commit: 4/16/2025 **************************************
 forgot to update config-names lmao

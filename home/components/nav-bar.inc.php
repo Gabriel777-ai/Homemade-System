@@ -46,7 +46,7 @@ error_reporting(E_ALL);
     <a class="navbar-brand" href="#"><i class="fab fa-linkedin fa-2x"></i></a>
     <!-- Search form -->
     <form class="input-group" style="width: 400px">
-      <input type="search" class="form-control" placeholder="Thoughts?" aria-label="Search" />
+      <input type="search" class="form-control" placeholder="Any thoughts? <?= $role." ".$username  ?>?" aria-label="Search" />
       <button class="btn btn-outline-primary" type="button" data-mdb-ripple-init data-mdb-ripple-color="dark" style="padding: .45rem 1.5rem .35rem;">
         Search
       </button>

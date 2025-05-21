@@ -10,7 +10,7 @@
 
     <header style='display:flex; flex-direction:column; justify-content:center; align-items:center; margin:10rem 0 100px 0;'>
         <h1 style='font-size:3.9rem;'>Bestlink General Hospital</h1>
-        <h2 style='font-size:3rem;'>Welcome, <?php echo htmlspecialchars($role . " - " . $username); ?></h2>
+        <h2 style='font-size:3rem;'>Welcome, <?php echo htmlspecialchars($role . " " . $username); ?></h2>
         <p style='font-size:1.5rem;'>Care through virtual devices.</p>
     </header>
 

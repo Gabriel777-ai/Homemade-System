@@ -29,7 +29,7 @@
             </head>
             <form method='POST' onsubmit="return logout('../')" action='<?= BASE_URL ?>/home/process_logout.php'>
                 <div class='card shadow'>
-                    <img src="<?= BASE_URL ?>home/images/omg-meme.gif" alt="">
+                    <img src="<?= BASE_URL ?>home/images/session-expired.gif" alt="">
                     <h1 class='text-danger'>Session expired! Please Log in again!</h1>
                     <button type='submit' class="btn btn-danger">Back to Log in Page</button>
                 </div>
