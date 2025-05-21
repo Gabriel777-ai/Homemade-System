@@ -769,3 +769,694 @@ DELIMITER ;
 CREATE INDEX idx_audit_date ON audits(audit_date);
 CREATE INDEX idx_finding_status ON findings(status);
 CREATE INDEX idx_department_id ON audits(department_id);
+
+-- Create the database (uncomment if you need to create a new database)
+-- CREATE DATABASE document_tracking;
+-- USE document_tracking;
+
+-- Create roles table
+CREATE TABLE roles (
+    role_id INT AUTO_INCREMENT PRIMARY KEY,
+    role_name VARCHAR(50) NOT NULL UNIQUE,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create departments table
+CREATE TABLE departments (
+    department_id INT AUTO_INCREMENT PRIMARY KEY,
+    department_name VARCHAR(100) NOT NULL,
+    department_code VARCHAR(10),
+    manager_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Create users table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    department_id INT,
+    role_id INT NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (department_id) REFERENCES departments(department_id),
+    FOREIGN KEY (role_id) REFERENCES roles(role_id)
+);
+
+-- Update departments table with manager_id foreign key
+ALTER TABLE departments
+ADD CONSTRAINT fk_manager
+FOREIGN KEY (manager_id) REFERENCES users(user_id);
+
+-- Create document_types table
+CREATE TABLE document_types (
+    document_type_id INT AUTO_INCREMENT PRIMARY KEY,
+    type_name VARCHAR(50) NOT NULL,
+    type_code VARCHAR(10) NOT NULL UNIQUE,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create approval_levels table
+CREATE TABLE approval_levels (
+    level_id INT AUTO_INCREMENT PRIMARY KEY,
+    level_name VARCHAR(50) NOT NULL,
+    level_order INT NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create document_type_approval_workflow table
+CREATE TABLE document_type_approval_workflow (
+    workflow_id INT AUTO_INCREMENT PRIMARY KEY,
+    document_type_id INT NOT NULL,
+    level_id INT NOT NULL,
+    approver_role_id INT,
+    approver_department_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_type_id) REFERENCES document_types(document_type_id),
+    FOREIGN KEY (level_id) REFERENCES approval_levels(level_id),
+    FOREIGN KEY (approver_role_id) REFERENCES roles(role_id),
+    FOREIGN KEY (approver_department_id) REFERENCES departments(department_id)
+);
+
+-- Create documents table
+CREATE TABLE documents (
+    document_id INT AUTO_INCREMENT PRIMARY KEY,
+    reference_number VARCHAR(50) NOT NULL UNIQUE,
+    document_type_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    file_path VARCHAR(255),
+    created_by INT NOT NULL,
+    current_approval_level INT DEFAULT 1,
+    status ENUM('Draft', 'Pending', 'In Review', 'Approved', 'Rejected', 'Cancelled') DEFAULT 'Draft',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_type_id) REFERENCES document_types(document_type_id),
+    FOREIGN KEY (created_by) REFERENCES users(user_id),
+    FOREIGN KEY (current_approval_level) REFERENCES approval_levels(level_id)
+);
+
+-- Create document_approvals table
+CREATE TABLE document_approvals (
+    approval_id INT AUTO_INCREMENT PRIMARY KEY,
+    document_id INT NOT NULL,
+    level_id INT NOT NULL,
+    approver_id INT,
+    department_id INT,
+    status ENUM('Pending', 'In Review', 'Approved', 'Rejected') DEFAULT 'Pending',
+    comments TEXT,
+    approved_at TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_id) REFERENCES documents(document_id),
+    FOREIGN KEY (level_id) REFERENCES approval_levels(level_id),
+    FOREIGN KEY (approver_id) REFERENCES users(user_id),
+    FOREIGN KEY (department_id) REFERENCES departments(department_id)
+);
+
+-- Create document_history table
+CREATE TABLE document_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    document_id INT NOT NULL,
+    action VARCHAR(50) NOT NULL,
+    action_by INT NOT NULL,
+    comments TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_id) REFERENCES documents(document_id),
+    FOREIGN KEY (action_by) REFERENCES users(user_id)
+);
+
+-- Create notifications table
+CREATE TABLE notifications (
+    notification_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    document_id INT NOT NULL,
+    message TEXT NOT NULL,
+    is_read BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (document_id) REFERENCES documents(document_id)
+);
+
+-- Create document_metadata table for additional document properties
+CREATE TABLE document_metadata (
+    metadata_id INT AUTO_INCREMENT PRIMARY KEY,
+    document_id INT NOT NULL,
+    metadata_key VARCHAR(50) NOT NULL,
+    metadata_value TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_id) REFERENCES documents(document_id),
+    UNIQUE KEY unique_document_metadata (document_id, metadata_key)
+);
+
+-- Create document_comments table
+CREATE TABLE document_comments (
+    comment_id INT AUTO_INCREMENT PRIMARY KEY,
+    document_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_id) REFERENCES documents(document_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+-- Create document_tags table
+CREATE TABLE document_tags (
+    tag_id INT AUTO_INCREMENT PRIMARY KEY,
+    tag_name VARCHAR(50) NOT NULL UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create document_tag_mapping table
+CREATE TABLE document_tag_mapping (
+    mapping_id INT AUTO_INCREMENT PRIMARY KEY,
+    document_id INT NOT NULL,
+    tag_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (document_id) REFERENCES documents(document_id),
+    FOREIGN KEY (tag_id) REFERENCES document_tags(tag_id),
+    UNIQUE KEY unique_document_tag (document_id, tag_id)
+);
+
+-- Insert sample data
+
+-- Insert roles
+INSERT INTO roles (role_name, description) VALUES
+('admin', 'System administrator with full access'),
+('manager', 'Department manager with approval rights'),
+('employee', 'Regular employee with document creation rights'),
+('viewer', 'User with read-only access');
+
+-- Insert departments
+INSERT INTO departments (department_name, department_code) VALUES
+('Finance', 'FIN'),
+('Human Resources', 'HR'),
+('Logistics', 'LOG'),
+('Information Technology', 'IT'),
+('Operations', 'OPS'),
+('Procurement', 'PROC');
+
+-- Insert users (password is 'password' hashed with bcrypt)
+INSERT INTO users (username, password, first_name, last_name, email, department_id, role_id) VALUES
+('admin', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', 'User', 'admin@company.com', 4, 1),
+('finance_mgr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Finance', 'Manager', 'finance@company.com', 1, 2),
+('hr_mgr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'HR', 'Manager', 'hr@company.com', 2, 2),
+('logistics_mgr', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Logistics', 'Manager', 'logistics@company.com', 3, 2),
+('employee1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'John', 'Doe', 'john@company.com', 5, 3),
+('employee2', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Jane', 'Smith', 'jane@company.com', 6, 3),
+('viewer1', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'View', 'User', 'viewer@company.com', NULL, 4);
+
+-- Update departments with managers
+UPDATE departments SET manager_id = 2 WHERE department_id = 1; -- Finance
+UPDATE departments SET manager_id = 3 WHERE department_id = 2; -- HR
+UPDATE departments SET manager_id = 4 WHERE department_id = 3; -- Logistics
+UPDATE departments SET manager_id = 1 WHERE department_id = 4; -- IT
+
+-- Insert document types
+INSERT INTO document_types (type_name, type_code, description) VALUES
+('Purchase Order', 'PO', 'Document for purchasing goods or services'),
+('Memorandum', 'MEMO', 'Internal communication document'),
+('Delivery Receipt', 'DR', 'Document confirming delivery of goods'),
+('Invoice', 'INV', 'Billing document for goods or services'),
+('Contract', 'CONT', 'Legal agreement document');
+
+-- Insert approval levels
+INSERT INTO approval_levels (level_name, level_order, description) VALUES
+('Department Review', 1, 'Initial review by department'),
+('Manager Approval', 2, 'Approval by department manager'),
+('Finance Review', 3, 'Review by finance department'),
+('Final Approval', 4, 'Final approval by authorized personnel');
+
+-- Insert document type approval workflows
+INSERT INTO document_type_approval_workflow (document_type_id, level_id, approver_role_id, approver_department_id) VALUES
+-- Purchase Order workflow
+(1, 1, 3, 6), -- Employee in Procurement
+(1, 2, 2, 6), -- Manager in Procurement
+(1, 3, 2, 1), -- Manager in Finance
+(1, 4, 2, 5), -- Manager in Operations
+
+-- Memorandum workflow
+(2, 1, 3, NULL), -- Any employee
+(2, 2, 2, 2), -- Manager in HR
+(2, 4, 1, NULL), -- Admin
+
+-- Delivery Receipt workflow
+(3, 1, 3, 3), -- Employee in Logistics
+(3, 2, 2, 3), -- Manager in Logistics
+(3, 3, 2, 1), -- Manager in Finance
+(3, 4, 2, 5); -- Manager in Operations
+
+-- Insert sample documents
+INSERT INTO documents (reference_number, document_type_id, title, description, created_by, current_approval_level, status) VALUES
+('PO#00123', 1, 'Office Supplies Purchase', 'Purchase order for Q2 office supplies', 6, 3, 'Pending'),
+('Memo#998', 2, 'Work From Home Policy Update', 'Updated policy for hybrid work arrangements', 5, 2, 'Pending'),
+('DR#0420', 3, 'IT Equipment Delivery', 'Delivery of new laptops and monitors', 5, 2, 'In Review');
+
+-- Insert document approvals
+INSERT INTO document_approvals (document_id, level_id, department_id, status) VALUES
+-- PO#00123 approvals
+(1, 1, 6, 'Approved'), -- Procurement department review
+(1, 2, 6, 'Approved'), -- Procurement manager approval
+(1, 3, 1, 'Pending'), -- Finance department review
+(1, 4, 5, 'Pending'), -- Operations final approval
+
+-- Memo#998 approvals
+(2, 1, NULL, 'Approved'), -- Any employee review
+(2, 2, 2, 'Pending'), -- HR manager approval
+(2, 4, NULL, 'Pending'), -- Admin final approval
+
+-- DR#0420 approvals
+(3, 1, 3, 'Approved'), -- Logistics employee review
+(3, 2, 3, 'In Review'), -- Logistics manager approval
+(3, 3, 1, 'Pending'), -- Finance department review
+(3, 4, 5, 'Pending'); -- Operations final approval
+
+-- Insert document history
+INSERT INTO document_history (document_id, action, action_by, comments) VALUES
+(1, 'Created', 6, 'Initial document creation'),
+(1, 'Submitted for Approval', 6, 'Submitted to procurement department'),
+(1, 'Approved', 6, 'Approved by procurement department'),
+(1, 'Forwarded', 6, 'Forwarded to procurement manager'),
+(1, 'Approved', 6, 'Approved by procurement manager'),
+(1, 'Forwarded', 6, 'Forwarded to finance department'),
+
+(2, 'Created', 5, 'Initial document creation'),
+(2, 'Submitted for Approval', 5, 'Submitted for initial review'),
+(2, 'Approved', 5, 'Passed initial review'),
+(2, 'Forwarded', 5, 'Forwarded to HR department'),
+
+(3, 'Created', 5, 'Initial document creation'),
+(3, 'Submitted for Approval', 5, 'Submitted to logistics department'),
+(3, 'Approved', 5, 'Approved by logistics department'),
+(3, 'Forwarded', 5, 'Forwarded to logistics manager'),
+(3, 'In Review', 4, 'Currently being reviewed by logistics manager');
+
+-- Insert notifications
+INSERT INTO notifications (user_id, document_id, message) VALUES
+(2, 1, 'PO#00123 is awaiting your approval'),
+(3, 2, 'Memo#998 is awaiting your approval'),
+(4, 3, 'DR#0420 is awaiting your review');
+
+-- Insert document metadata
+INSERT INTO document_metadata (document_id, metadata_key, metadata_value) VALUES
+(1, 'total_amount', '1250.00'),
+(1, 'vendor', 'Office Supplies Inc.'),
+(1, 'payment_terms', 'Net 30'),
+(2, 'effective_date', '2025-05-01'),
+(2, 'expiration_date', '2026-04-30'),
+(3, 'delivery_date', '2025-04-15'),
+(3, 'carrier', 'FastShip Logistics');
+
+-- Insert document tags
+INSERT INTO document_tags (tag_name) VALUES
+('Urgent'),
+('Confidential'),
+('Budget 2025'),
+('IT Equipment'),
+('Policy'),
+('Vendor');
+
+-- Insert document tag mappings
+INSERT INTO document_tag_mapping (document_id, tag_id) VALUES
+(1, 3), -- PO#00123 - Budget 2025
+(1, 6), -- PO#00123 - Vendor
+(2, 2), -- Memo#998 - Confidential
+(2, 5), -- Memo#998 - Policy
+(3, 1), -- DR#0420 - Urgent
+(3, 4); -- DR#0420 - IT Equipment
+
+-- Create views for easier data access
+
+-- View for pending approvals (matching the PHP page display)
+CREATE VIEW pending_approvals_view AS
+SELECT 
+    d.document_id,
+    d.reference_number,
+    dt.type_name AS document_type,
+    dt.type_code,
+    d.title,
+    d.status,
+    CASE 
+        WHEN da.department_id IS NOT NULL THEN dep.department_name
+        ELSE 'Multiple Departments'
+    END AS awaiting_approval_from
+FROM 
+    documents d
+JOIN 
+    document_types dt ON d.document_type_id = dt.document_type_id
+JOIN 
+    document_approvals da ON d.document_id = da.document_id AND da.status IN ('Pending', 'In Review')
+LEFT JOIN 
+    departments dep ON da.department_id = dep.department_id
+WHERE 
+    d.status IN ('Pending', 'In Review')
+ORDER BY 
+    d.created_at DESC;
+
+-- View for user's pending tasks
+CREATE VIEW user_pending_tasks_view AS
+SELECT 
+    u.user_id,
+    u.username,
+    d.document_id,
+    d.reference_number,
+    dt.type_name AS document_type,
+    d.title,
+    da.status,
+    da.created_at AS assigned_at
+FROM 
+    users u
+JOIN 
+    departments dep ON u.department_id = dep.department_id
+JOIN 
+    document_approvals da ON dep.department_id = da.department_id
+JOIN 
+    documents d ON da.document_id = d.document_id
+JOIN 
+    document_types dt ON d.document_type_id = dt.document_type_id
+WHERE 
+    da.status IN ('Pending', 'In Review')
+    AND (da.approver_id IS NULL OR da.approver_id = u.user_id)
+ORDER BY 
+    da.created_at ASC;
+
+-- View for document approval history
+CREATE VIEW document_approval_history_view AS
+SELECT 
+    d.document_id,
+    d.reference_number,
+    dt.type_name AS document_type,
+    al.level_name AS approval_level,
+    CASE 
+        WHEN da.department_id IS NOT NULL THEN dep.department_name
+        ELSE 'N/A'
+    END AS department,
+    CASE 
+        WHEN da.approver_id IS NOT NULL THEN CONCAT(u.first_name, ' ', u.last_name)
+        ELSE 'Not Assigned'
+    END AS approver,
+    da.status,
+    da.comments,
+    da.approved_at
+FROM 
+    documents d
+JOIN 
+    document_types dt ON d.document_type_id = dt.document_type_id
+JOIN 
+    document_approvals da ON d.document_id = da.document_id
+JOIN 
+    approval_levels al ON da.level_id = al.level_id
+LEFT JOIN 
+    departments dep ON da.department_id = dep.department_id
+LEFT JOIN 
+    users u ON da.approver_id = u.user_id
+ORDER BY 
+    d.document_id, al.level_order;
+
+-- Create stored procedures
+
+-- Procedure to submit a document for approval
+DELIMITER //
+CREATE PROCEDURE submit_document_for_approval(
+    IN p_document_id INT,
+    IN p_submitted_by INT,
+    OUT p_success BOOLEAN
+)
+BEGIN
+    DECLARE v_document_type_id INT;
+    DECLARE v_current_status VARCHAR(20);
+    
+    -- Get document information
+    SELECT document_type_id, status INTO v_document_type_id, v_current_status
+    FROM documents
+    WHERE document_id = p_document_id;
+    
+    -- Check if document exists and is in draft status
+    IF v_document_type_id IS NULL THEN
+        SET p_success = FALSE;
+    ELSEIF v_current_status != 'Draft' THEN
+        SET p_success = FALSE;
+    ELSE
+        -- Update document status
+        UPDATE documents
+        SET status = 'Pending', current_approval_level = 1
+        WHERE document_id = p_document_id;
+        
+        -- Add to document history
+        INSERT INTO document_history (document_id, action, action_by, comments)
+        VALUES (p_document_id, 'Submitted for Approval', p_submitted_by, 'Document submitted for approval process');
+        
+        -- Create approval entries based on workflow
+        INSERT INTO document_approvals (document_id, level_id, department_id, status)
+        SELECT p_document_id, dtaw.level_id, dtaw.approver_department_id, 'Pending'
+        FROM document_type_approval_workflow dtaw
+        WHERE dtaw.document_type_id = v_document_type_id
+        ORDER BY dtaw.level_id;
+        
+        -- Create notifications for first level approvers
+        INSERT INTO notifications (user_id, document_id, message)
+        SELECT u.user_id, p_document_id, CONCAT('Document ', 
+            (SELECT reference_number FROM documents WHERE document_id = p_document_id), 
+            ' requires your approval')
+        FROM users u
+        JOIN departments d ON u.department_id = d.department_id
+        WHERE d.department_id = (
+            SELECT approver_department_id 
+            FROM document_type_approval_workflow 
+            WHERE document_type_id = v_document_type_id AND level_id = 1
+        )
+        AND u.role_id = (
+            SELECT approver_role_id 
+            FROM document_type_approval_workflow 
+            WHERE document_type_id = v_document_type_id AND level_id = 1
+        );
+        
+        SET p_success = TRUE;
+    END IF;
+END //
+DELIMITER ;
+
+-- Procedure to approve a document
+DELIMITER //
+CREATE PROCEDURE approve_document(
+    IN p_document_id INT,
+    IN p_level_id INT,
+    IN p_approver_id INT,
+    IN p_comments TEXT,
+    OUT p_success BOOLEAN
+)
+BEGIN
+    DECLARE v_next_level INT;
+    DECLARE v_max_level INT;
+    DECLARE v_document_type_id INT;
+    
+    -- Get document information
+    SELECT document_type_id INTO v_document_type_id
+    FROM documents
+    WHERE document_id = p_document_id;
+    
+    -- Get next approval level
+    SELECT MIN(level_id) INTO v_next_level
+    FROM document_type_approval_workflow
+    WHERE document_type_id = v_document_type_id AND level_id > p_level_id;
+    
+    -- Get max approval level
+    SELECT MAX(level_id) INTO v_max_level
+    FROM document_type_approval_workflow
+    WHERE document_type_id = v_document_type_id;
+    
+    -- Update current approval
+    UPDATE document_approvals
+    SET status = 'Approved', approver_id = p_approver_id, comments = p_comments, approved_at = NOW()
+    WHERE document_id = p_document_id AND level_id = p_level_id;
+    
+    -- Add to document history
+    INSERT INTO document_history (document_id, action, action_by, comments)
+    VALUES (p_document_id, 'Approved', p_approver_id, p_comments);
+    
+    -- If this was the final approval level
+    IF p_level_id = v_max_level THEN
+        -- Update document status to Approved
+        UPDATE documents
+        SET status = 'Approved'
+        WHERE document_id = p_document_id;
+        
+        -- Create notification for document creator
+        INSERT INTO notifications (user_id, document_id, message)
+        SELECT created_by, p_document_id, CONCAT('Your document ', reference_number, ' has been fully approved')
+        FROM documents
+        WHERE document_id = p_document_id;
+        
+        SET p_success = TRUE;
+    ELSE
+        -- Update document to next approval level
+        UPDATE documents
+        SET current_approval_level = v_next_level
+        WHERE document_id = p_document_id;
+        
+        -- Create notifications for next level approvers
+        INSERT INTO notifications (user_id, document_id, message)
+        SELECT u.user_id, p_document_id, CONCAT('Document ', 
+            (SELECT reference_number FROM documents WHERE document_id = p_document_id), 
+            ' requires your approval')
+        FROM users u
+        JOIN departments d ON u.department_id = d.department_id
+        WHERE d.department_id = (
+            SELECT approver_department_id 
+            FROM document_type_approval_workflow 
+            WHERE document_type_id = v_document_type_id AND level_id = v_next_level
+        )
+        AND u.role_id = (
+            SELECT approver_role_id 
+            FROM document_type_approval_workflow 
+            WHERE document_type_id = v_document_type_id AND level_id = v_next_level
+        );
+        
+        SET p_success = TRUE;
+    END IF;
+END //
+DELIMITER ;
+
+-- Procedure to reject a document
+DELIMITER //
+CREATE PROCEDURE reject_document(
+    IN p_document_id INT,
+    IN p_level_id INT,
+    IN p_approver_id INT,
+    IN p_comments TEXT,
+    OUT p_success BOOLEAN
+)
+BEGIN
+    -- Update current approval
+    UPDATE document_approvals
+    SET status = 'Rejected', approver_id = p_approver_id, comments = p_comments, approved_at = NOW()
+    WHERE document_id = p_document_id AND level_id = p_level_id;
+    
+    -- Update document status
+    UPDATE documents
+    SET status = 'Rejected'
+    WHERE document_id = p_document_id;
+    
+    -- Add to document history
+    INSERT INTO document_history (document_id, action, action_by, comments)
+    VALUES (p_document_id, 'Rejected', p_approver_id, p_comments);
+    
+    -- Create notification for document creator
+    INSERT INTO notifications (user_id, document_id, message)
+    SELECT created_by, p_document_id, CONCAT('Your document ', reference_number, ' has been rejected')
+    FROM documents
+    WHERE document_id = p_document_id;
+    
+    SET p_success = TRUE;
+END //
+DELIMITER ;
+
+-- Create function to get document status
+DELIMITER //
+CREATE FUNCTION get_document_approval_status(p_document_id INT) 
+RETURNS VARCHAR(100)
+DETERMINISTIC
+BEGIN
+    DECLARE v_status VARCHAR(20);
+    DECLARE v_current_level INT;
+    DECLARE v_department_name VARCHAR(100);
+    DECLARE v_result VARCHAR(100);
+    
+    -- Get document status and current level
+    SELECT status, current_approval_level INTO v_status, v_current_level
+    FROM documents
+    WHERE document_id = p_document_id;
+    
+    -- Get department name for current approval level
+    SELECT d.department_name INTO v_department_name
+    FROM document_approvals da
+    JOIN departments d ON da.department_id = d.department_id
+    WHERE da.document_id = p_document_id AND da.level_id = v_current_level;
+    
+    -- Build result string
+    IF v_status = 'Approved' THEN
+        SET v_result = 'Approved';
+    ELSEIF v_status = 'Rejected' THEN
+        SET v_result = 'Rejected';
+    ELSEIF v_status = 'Draft' THEN
+        SET v_result = 'Draft';
+    ELSEIF v_status = 'Cancelled' THEN
+        SET v_result = 'Cancelled';
+    ELSE
+        SET v_result = CONCAT(v_status, ' - Awaiting approval from ', v_department_name);
+    END IF;
+    
+    RETURN v_result;
+END //
+DELIMITER ;
+
+-- Create triggers
+
+-- Trigger to update document status when all approvals are complete
+DELIMITER //
+CREATE TRIGGER after_document_approval_update
+AFTER UPDATE ON document_approvals
+FOR EACH ROW
+BEGIN
+    DECLARE v_all_approved BOOLEAN;
+    DECLARE v_document_id INT;
+    
+    IF NEW.status = 'Approved' AND OLD.status != 'Approved' THEN
+        SET v_document_id = NEW.document_id;
+        
+        -- Check if all required approvals are complete
+        SELECT COUNT(*) = 0 INTO v_all_approved
+        FROM document_approvals
+        WHERE document_id = v_document_id AND status != 'Approved';
+        
+        -- If all approvals are complete, update document status
+        IF v_all_approved THEN
+            UPDATE documents
+            SET status = 'Approved'
+            WHERE document_id = v_document_id;
+        END IF;
+    END IF;
+END //
+DELIMITER ;
+
+-- Trigger to create a reference number for new documents
+DELIMITER //
+CREATE TRIGGER before_document_insert
+BEFORE INSERT ON documents
+FOR EACH ROW
+BEGIN
+    DECLARE v_type_code VARCHAR(10);
+    DECLARE v_next_number INT;
+    
+    -- Get document type code
+    SELECT type_code INTO v_type_code
+    FROM document_types
+    WHERE document_type_id = NEW.document_type_id;
+    
+    -- Get next number for this document type
+    SELECT IFNULL(MAX(SUBSTRING_INDEX(reference_number, '#', -1) + 0), 0) + 1 INTO v_next_number
+    FROM documents
+    WHERE document_type_id = NEW.document_type_id;
+    
+    -- Set reference number if not provided
+    IF NEW.reference_number IS NULL OR NEW.reference_number = '' THEN
+        SET NEW.reference_number = CONCAT(v_type_code, '#', LPAD(v_next_number, 5, '0'));
+    END IF;
+END //
+DELIMITER ;
+
+-- Create indexes for better performance
+CREATE INDEX idx_document_status ON documents(status);
+CREATE INDEX idx_document_reference ON documents(reference_number);
+CREATE INDEX idx_document_type ON documents(document_type_id);
+CREATE INDEX idx_document_approval_status ON document_approvals(document_id, status);
+CREATE INDEX idx_notification_user ON notifications(user_id, is_read);
